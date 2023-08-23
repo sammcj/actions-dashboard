@@ -17,6 +17,8 @@ on:
         required: false
         type: boolean
         default: false
+  schedule:
+    - cron: "30 14 9 * *" #  run workflow monthly
 
 # One build per branch, cancel out of date builds only on pull requests and feature branches
 concurrency:
@@ -26,11 +28,28 @@ concurrency:
 permissions:
   contents: read
   packages: write
+  pull-requests: write
 
 env:
   NODE_OPTIONS: --max_old_space_size=4096
 
 jobs:
+  lint-dockerfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-hadolint@v1
+        with:
+          hadolint_ignore: DL3033 DL3003
+          fail_on_error: true
+          level: error
+          reporter: github-pr-review
+          filter_mode: added # Only lint added / modified lines
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build-dev:
     runs-on: ubuntu-latest
     steps:
