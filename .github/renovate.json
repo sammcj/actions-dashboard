@@ -1,0 +1,86 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":timezone(Australia/Melbourne)",
+    "group:monorepos",
+    "helpers:disableTypesNodeMajor",
+    "workarounds:all"
+  ],
+  "description": "Renovate updates",
+  "commitMessagePrefix": "chore(renovatebot):",
+  "force": {
+    "constraints": {
+      "node": "< 21.0.0"
+    }
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["major"],
+      "reviewersFromCodeOwners": true,
+      "addLabels": ["renovatebot", "major", "version-update"],
+      "commitMessagePrefix": "chore(renovatebot): major",
+      "groupName": "major",
+      "extends": ["schedule:quarterly"]
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor"],
+      "reviewersFromCodeOwners": true,
+      "addLabels": ["renovatebot", "minor", "version-update"],
+      "commitMessagePrefix": "chore(renovatebot): minor",
+      "groupName": "minor",
+      "extends": ["schedule:monthly"]
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch"],
+      "reviewersFromCodeOwners": true,
+      "addLabels": ["renovatebot", "patch", "version-update"],
+      "commitMessagePrefix": "chore(renovatebot): patch",
+      "groupName": "patch",
+      "extends": ["schedule:monthly"]
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["pin", "digest"],
+      "reviewersFromCodeOwners": true,
+      "addLabels": ["renovatebot", "pin", "version-update"],
+      "commitMessagePrefix": "chore(renovatebot): pin",
+      "groupName": "pin",
+      "extends": ["schedule:monthly"]
+    },
+    {
+      "description": "We should match aws-cdk and constructs versions",
+      "matchPackagePatterns": ["aws-cdk", "aws-cdk-lib", "constructs"],
+      "groupName": "aws-cdk",
+      "enabled": true,
+      "addLabels": ["aws-cdk"]
+    },
+    {
+      "matchManagers": ["docker-compose", "dockerfile"],
+      "groupName": "docker",
+      "addLabels": ["docker"]
+    },
+    {
+      "matchManagers": "github-actions",
+      "separateMultipleMajor": true,
+      "groupName": "github-actions",
+      "commitMessagePrefix": "chore(renovatebot): Github Actions updates"
+    },
+    {
+      "groupName": "jest monorepo",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@types/jest"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "commitMessagePrefix": "chore(renovatebot): Security update",
+    "labels": ["security"]
+  },
+  "github-actions": {
+    "description": "make sure we check for updates to github actions managed by file-sync",
+    "fileMatch": ["^(sync-files/workflows).*/[^/]+.ya?ml$"]
+  }
+}

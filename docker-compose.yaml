@@ -1,0 +1,29 @@
+# Github Actions Dashboard
+services:
+  actions-dashboard:
+    image: "${CONTAINER_IMAGE:-actions-dashboard:latest}"
+    container_name: "${CONTAINER_NAME:-actions-dashboard}"
+    build:
+      context: "."
+      args:
+        - "NODE_ENV=${NODE_ENV:-production}"
+        - "LOG_LEVEL=${LOG_LEVEL:-debug}"
+        - "NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED:-1}"
+    deploy:
+      resources:
+        limits:
+          cpus: "${CONTAINER_WEB_CPUS:-0}"
+          memory: "${CONTAINER_WEB_MEMORY:-0}"
+    ports:
+      - "${HTTP_PORT:-0.0.0.0:3000}:3000"
+    env_file:
+      - "${ENV_FILE:-.env}"
+    tty: true
+    restart: "${CONTAINER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "10s"
+    healthcheck:
+      test: "${CONTAINER_HEALTHCHECK:-curl localhost:3000/}"
+      interval: "60s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3

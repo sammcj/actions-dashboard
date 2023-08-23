@@ -1,0 +1,129 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# config files
+!config.template.json
+config*json*
+.env*.local
+.env
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Inverse matchs to ensure these aren't ignored
+!*.env.template
+!*.eslintrc.js
+!*.prettierrc.js
+!*.config.js
+
+# Typescipt and CDK
+**/*.cdk.staging
+**/*.d.ts
+**/*.tabl.json
+**/*.tsbuildinfo
+**/cdk.context.json
+**/cdk.out
+**/diagram.dot
+**/diagram.png
+
+# NodeJS
+**/node_modules
+
+# Editors
+.project
+.settings
+.springBeans
+**/.favorites.json
+**/.idea
+**/.vscode
+**/*.Session.vim
+**/*.sw[a-z]
+**/*.vim
+**/*~
+
+# OS generated files
+**/._*
+**/.AppleDouble
+**/.dccache
+**/.dropbox
+**/.DS_Store
+**/.DS_STORE
+**/.lnk
+**/.LSOverride
+**/$RECYCLE.BIN/
+**/Desktop.ini
+
+# Temp files
+**/.temp
+**/.tmp
+tmp/
+.tmp
+
+# git mu-repo
+.mu_repo
+
+# Local state files
+**/.BUILD_COMPLETED
+**/.cache
+**/.filesystem
+**/.LAST_BUILD
+**/.local-npm/
+**/.nyc_output
+**/.nycrc
+**/.tools/
+**/.webassets-cache
+**/*.lock
+**/*.lock.hcl
+**/*.pid
+**/coverage/
+**/db.sqlite3
+**/db.sqlite3-journal
+**/pack/
+nginx/nginx-generated.conf
+
+# Logs
+**/*.log
+HELP.md
+
+# Build directories
+**/_build/
+**/dist
+build/
+nbbuild/
+nbdist/
+out/
+target/
+
+# direnv
+.envrc
+.env
+
+# temp
+_tmp_secrets/
